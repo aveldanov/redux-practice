@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 
 class Counter extends Component {
-  
+
 
   render() {
     return (
@@ -17,15 +17,32 @@ class Counter extends Component {
         <CounterControl label="Decrement" clicked={this.props.onDecrementCounter} />
         <CounterControl label="Add 5" clicked={this.props.onAddCounter} />
         <CounterControl label="Subtract 5" clicked={this.props.onSubstractCounter} />
+        <hr />
+        <button onClick={this.props.onStoreResult}>Store Results</button>
+
+        <ul>
+          {this.props.storedResults.map((el) =>
+            (<li
+              key={el.id}
+              onClick={() => this.props.onDeleteResult(el.id)}>{el.value}
+            </li>)
+
+          )}
+
+        </ul>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
+  // console.log(state);
+
   return {
-    ctr: state.counter
+    ctr: state.counter,
+    storedResults: state.results
   }
+
 }
 
 const mapDispatchToProps = dispatch => {
@@ -44,7 +61,13 @@ const mapDispatchToProps = dispatch => {
       type: 'SUBSTRACT',
       value: 5
     }),
-
+    onStoreResult: () => dispatch({
+      type: 'STORE_RESULT'
+    }),
+    onDeleteResult: (id) => dispatch({
+      type: 'DELETE_RESULT',
+      resultElemId: id
+    })
 
   }
 }
