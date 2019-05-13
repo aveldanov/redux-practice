@@ -12,6 +12,12 @@ const rootReducer = combineReducers({
   ctr: counterReducer,
   res: resultReducer
 })
+
+//Middleware
+const logger = store => {
+  reutrn next
+}
+
 const store = createStore(rootReducer);
 
 
